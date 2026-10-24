@@ -1,0 +1,19 @@
+USE pandemic;
+
+DELIMITER //
+
+CREATE FUNCTION year_difference(input_year INT)
+RETURNS INT
+NOT DETERMINISTIC
+NO SQL
+BEGIN
+    RETURN TIMESTAMPDIFF(YEAR, MAKEDATE(input_year, 1), CURDATE());
+END //
+
+DELIMITER ;
+
+SELECT
+    Year,
+    year_difference(Year) AS year_difference
+FROM infectious_cases_normalized
+LIMIT 10;
